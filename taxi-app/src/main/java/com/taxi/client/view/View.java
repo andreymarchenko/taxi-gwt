@@ -1,15 +1,14 @@
 package com.taxi.client.view;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.EventBus;
 import com.taxi.client.presenter.Presenter;
 import com.taxi.client.view.dialog.OrderDialog;
@@ -27,11 +26,26 @@ public class View extends Composite {
     private static ViewUiBinder ourUiBinder = GWT.create(ViewUiBinder.class);
 
     @UiField
-    RootLayoutPanel mapPanel;
+    HTMLPanel root;
+
+    @UiField
+    HorizontalPanel header;
+
+    @UiField
+    HorizontalPanel mapPanel;
 
     private Map map;
     private Presenter presenter;
     private EventBus eventBus;
+    private OrderDialog orderDialog;
+
+/*    void createHeader() {
+        header = new HorizontalPanel();
+        header.getElement().getStyle().setBackgroundColor("Blue");
+        header.getElement().getStyle().setHeight(100, Style.Unit.PX);
+        header.getElement().getStyle().setWidth(Window.getClientWidth(), Style.Unit.PX);
+        root.add(header);
+    }*/
 
     @Inject
     public View(EventBus eventBus) {
@@ -55,17 +69,25 @@ public class View extends Composite {
             public void run() {
                 map = new Map();
                 map.setPresenter(presenter);
+                //createHeader();
                 mapPanel.add(map);
                 prepareMap();
             }
         };
-
         LoadApi.go(onLoad, loadLibraries, sensor);
     }
 
     public void createUi() {
         initWidget(ourUiBinder.createAndBindUi(this));
         loadMapApi();
+        orderDialog = new OrderDialog();
+        orderDialog.show();
+        root.getElement().getStyle().setMarginLeft(-8, Style.Unit.PX);
+        root.getElement().getStyle().setMarginTop(-8, Style.Unit.PX);
+        root.getElement().getStyle().setMarginBottom(8, Style.Unit.PX);
+        root.getElement().getStyle().setMarginRight(-8, Style.Unit.PX);
+        header.getElement().getStyle().setWidth(Window.getClientWidth(), Style.Unit.PX);
+        header.getElement().getStyle().setHeight(Window.getClientHeight() / 15, Style.Unit.PX);
         RootPanel.get("root").add(this);
     }
 

@@ -46,8 +46,6 @@ public class Map extends Composite {
         this.markers = new ArrayList<>();
         initWidget(panel);
         drawMap();
-        orderDialog = new OrderDialog();
-
         drawMapAds();
         bind();
     }
@@ -73,7 +71,7 @@ public class Map extends Composite {
     private void drawMap() {
         mapWidget = new MapWidget(createDefaultMapOptions());
         panel.add(mapWidget);
-        mapWidget.setSize(Double.toString(Window.getClientWidth()), Double.toString(Window.getClientHeight()));
+        mapWidget.setSize(Double.toString(Window.getClientWidth()), Double.toString(14.0/15 * Window.getClientHeight()-8));
     }
 
     private void drawMapAds() {

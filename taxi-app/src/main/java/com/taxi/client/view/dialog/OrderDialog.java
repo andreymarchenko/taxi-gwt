@@ -1,29 +1,105 @@
 package com.taxi.client.view.dialog;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Label;
 
 public class OrderDialog extends PopupPanel {
 
-    interface OrderDialogUiBinder extends UiBinder<Widget, OrderDialog> {
-    }
+    private VerticalPanel contentPanel;
+    private HorizontalPanel fromToPanel;
+    private HorizontalPanel numberPanel;
+    private VerticalPanel fromPanel;
+    private VerticalPanel toPanel;
+    private TextBox from;
+    private Label fromLabel;
+    private TextBox to;
+    private Label toLabel;
 
-    private static OrderDialogUiBinder ourUiBinder = GWT.create(OrderDialogUiBinder.class);
-
-    @UiField
-    Button button;
 
     public OrderDialog() {
-        this.getElement().getStyle().setWidth(100, Style.Unit.PX);
-        this.getElement().getStyle().setHeight(100, Style.Unit.PX);
-        this.getElement().getStyle().setBackgroundColor("black");
-        this.show();
+        createMarkUp();
+    }
+
+    private void createBorder(Widget widget, String color) {
+        widget.getElement().getStyle().setBorderStyle(Style.BorderStyle.SOLID);
+        widget.getElement().getStyle().setBorderColor(color);
+        widget.getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
+    }
+
+    private void createMarkUp() {
+
+        this.getElement().getStyle().setBackgroundColor("White");
+        this.getElement().getStyle().setHeight(Window.getClientHeight() / 2.7, Style.Unit.PX);
+        this.getElement().getStyle().setWidth(Window.getClientWidth() / 2.7, Style.Unit.PX);
+        this.getElement().getStyle().setMarginTop(Window.getClientHeight() / 13, Style.Unit.PX);
+        this.getElement().getStyle().setMarginLeft(2.0 / 3.2 * Window.getClientWidth(), Style.Unit.PX);
+
+        createBorder(this, "#a3a3a3");
+
+        contentPanel = new VerticalPanel();
+        contentPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 3, Style.Unit.PX);
+        contentPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 3, Style.Unit.PX);
+        contentPanel.getElement().getStyle().setOpacity(0.9);
+
+        fromPanel = new VerticalPanel();
+        fromPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        fromPanel.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
+
+        fromLabel = new Label();
+        fromLabel.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
+        fromLabel.getElement().getStyle().setColor("#757575");
+        fromLabel.getElement().getStyle().setFontSize(15, Style.Unit.PX);
+        fromLabel.getElement().getStyle().setMarginTop(Window.getClientHeight() / 50, Style.Unit.PX);
+        fromLabel.setText("From");
+        fromPanel.add(fromLabel);
+
+        from = new TextBox();
+        from.getElement().getStyle().setFontSize(20, Style.Unit.PX);
+        from.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        from.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
+        from.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
+        createBorder(from, "#a3a3a3");
+        fromPanel.add(from);
+
+        toPanel = new VerticalPanel();
+        toPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        toPanel.getElement().getStyle().setMarginLeft(22, Style.Unit.PX);
+
+        toLabel = new Label();
+        toLabel.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
+        toLabel.getElement().getStyle().setColor("#757575");
+        toLabel.getElement().getStyle().setFontSize(15, Style.Unit.PX);
+        toLabel.getElement().getStyle().setMarginTop(Window.getClientHeight() / 50, Style.Unit.PX);
+        toLabel.setText("To");
+        toPanel.add(toLabel);
+
+        to = new TextBox();
+        to.getElement().getStyle().setFontSize(20, Style.Unit.PX);
+        to.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        to.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
+        to.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
+        createBorder(to, "#a3a3a3");
+        toPanel.add(to);
+
+        fromToPanel = new HorizontalPanel();
+        fromToPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 6, Style.Unit.PX);
+        fromToPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 3, Style.Unit.PX);
+
+        fromToPanel.add(fromPanel);
+        fromToPanel.add(toPanel);
+
+/*        to = new TextBox();
+        to.getElement().getStyle().setFontSize(20, Style.Unit.PX);
+        to.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        to.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
+        to.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
+        createBorder(to, "#a3a3a3");
+        fromToPanel.add(to);*/
+
+        contentPanel.add(fromToPanel);
+
+        this.add(contentPanel);
     }
 }
