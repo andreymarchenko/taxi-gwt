@@ -4,11 +4,16 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>com.taxi.taxi taxiService</servlet-name>
-        <servlet-class>com.taxi.server.taxiServiceImpl</servlet-class>
+        <servlet-name>RestApi</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.taxi.server.service</param-value>
+        </init-param>
     </servlet>
+
     <servlet-mapping>
-        <servlet-name>com.taxi.taxi taxiService</servlet-name>
-        <url-pattern>/taxi/taxiService</url-pattern>
+        <servlet-name>RestApi</servlet-name>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 </web-app>

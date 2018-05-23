@@ -28,7 +28,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.taxi.client.presenter.Presenter;
+import com.taxi.client.service.EndPoint;
 import com.taxi.client.view.dialog.OrderDialog;
+import com.taxi.shared.Login;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +43,8 @@ public class Map extends Composite {
     private List<Marker> markers;
     private Presenter presenter;
     private MapWidget mapWidget;
-    private OrderDialog orderDialog;
+
+    private final EndPoint endPoint = GWT.create(EndPoint.class);
 
     public Map() {
         this.panel = new VerticalPanel();
@@ -54,7 +59,17 @@ public class Map extends Composite {
         mapWidget.addDblClickHandler(new DblClickMapHandler() {
             @Override
             public void onEvent(final DblClickMapEvent dblClickMapEvent) {
-                GWT.log("double click");
+                endPoint.login(new MethodCallback() {
+                    @Override
+                    public void onFailure(Method method, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Method method, Object o) {
+                        GWT.log("Привет");
+                    }
+                });
             }
         });
     }

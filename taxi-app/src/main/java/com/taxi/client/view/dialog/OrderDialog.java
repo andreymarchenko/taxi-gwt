@@ -9,7 +9,6 @@ public class OrderDialog extends PopupPanel {
 
     private VerticalPanel contentPanel;
     private HorizontalPanel fromToPanel;
-    private HorizontalPanel numberPanel;
     private VerticalPanel fromPanel;
     private VerticalPanel toPanel;
     private TextBox from;
@@ -29,19 +28,22 @@ public class OrderDialog extends PopupPanel {
     }
 
     private void createMarkUp() {
-
         this.getElement().getStyle().setBackgroundColor("White");
-        this.getElement().getStyle().setHeight(Window.getClientHeight() / 2.7, Style.Unit.PX);
+        this.getElement().getStyle().setHeight(Window.getClientHeight() / 3, Style.Unit.PX);
         this.getElement().getStyle().setWidth(Window.getClientWidth() / 2.7, Style.Unit.PX);
         this.getElement().getStyle().setMarginTop(Window.getClientHeight() / 13, Style.Unit.PX);
         this.getElement().getStyle().setMarginLeft(2.0 / 3.2 * Window.getClientWidth(), Style.Unit.PX);
-
         createBorder(this, "#a3a3a3");
 
         contentPanel = new VerticalPanel();
         contentPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 3, Style.Unit.PX);
-        contentPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 3, Style.Unit.PX);
-        contentPanel.getElement().getStyle().setOpacity(0.9);
+        contentPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 2.7, Style.Unit.PX);
+        this.add(contentPanel);
+
+        fromToPanel = new HorizontalPanel();
+        fromToPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 3, Style.Unit.PX);
+        fromToPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 2.7, Style.Unit.PX);
+        contentPanel.add(fromToPanel);
 
         fromPanel = new VerticalPanel();
         fromPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
@@ -57,15 +59,17 @@ public class OrderDialog extends PopupPanel {
 
         from = new TextBox();
         from.getElement().getStyle().setFontSize(20, Style.Unit.PX);
-        from.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        from.getElement().getStyle().setWidth(Window.getClientWidth() / 6.2, Style.Unit.PX);
         from.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
         from.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
         createBorder(from, "#a3a3a3");
         fromPanel.add(from);
 
+        fromToPanel.add(fromPanel);
+
         toPanel = new VerticalPanel();
         toPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
-        toPanel.getElement().getStyle().setMarginLeft(22, Style.Unit.PX);
+        toPanel.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
 
         toLabel = new Label();
         toLabel.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
@@ -77,29 +81,12 @@ public class OrderDialog extends PopupPanel {
 
         to = new TextBox();
         to.getElement().getStyle().setFontSize(20, Style.Unit.PX);
-        to.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
+        to.getElement().getStyle().setWidth(Window.getClientWidth() / 6.2, Style.Unit.PX);
         to.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
         to.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
         createBorder(to, "#a3a3a3");
         toPanel.add(to);
 
-        fromToPanel = new HorizontalPanel();
-        fromToPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 6, Style.Unit.PX);
-        fromToPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 3, Style.Unit.PX);
-
-        fromToPanel.add(fromPanel);
         fromToPanel.add(toPanel);
-
-/*        to = new TextBox();
-        to.getElement().getStyle().setFontSize(20, Style.Unit.PX);
-        to.getElement().getStyle().setWidth(Window.getClientWidth() / 6, Style.Unit.PX);
-        to.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
-        to.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
-        createBorder(to, "#a3a3a3");
-        fromToPanel.add(to);*/
-
-        contentPanel.add(fromToPanel);
-
-        this.add(contentPanel);
     }
 }

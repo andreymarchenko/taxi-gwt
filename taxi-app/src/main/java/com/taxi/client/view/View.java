@@ -11,6 +11,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.EventBus;
 import com.taxi.client.presenter.Presenter;
+import com.taxi.client.view.dialog.NumberDialog;
 import com.taxi.client.view.dialog.OrderDialog;
 import com.taxi.client.view.map.Map;
 import com.vaadin.polymer.paper.widget.PaperButton;
@@ -38,6 +39,7 @@ public class View extends Composite {
     private Presenter presenter;
     private EventBus eventBus;
     private OrderDialog orderDialog;
+    private NumberDialog numberDialog;
 
 /*    void createHeader() {
         header = new HorizontalPanel();
@@ -80,14 +82,18 @@ public class View extends Composite {
     public void createUi() {
         initWidget(ourUiBinder.createAndBindUi(this));
         loadMapApi();
-        orderDialog = new OrderDialog();
-        orderDialog.show();
         root.getElement().getStyle().setMarginLeft(-8, Style.Unit.PX);
         root.getElement().getStyle().setMarginTop(-8, Style.Unit.PX);
         root.getElement().getStyle().setMarginBottom(8, Style.Unit.PX);
         root.getElement().getStyle().setMarginRight(-8, Style.Unit.PX);
+
         header.getElement().getStyle().setWidth(Window.getClientWidth(), Style.Unit.PX);
         header.getElement().getStyle().setHeight(Window.getClientHeight() / 15, Style.Unit.PX);
+        orderDialog = new OrderDialog();
+        orderDialog.show();
+        numberDialog = new NumberDialog();
+        numberDialog.show();
+
         RootPanel.get("root").add(this);
     }
 
