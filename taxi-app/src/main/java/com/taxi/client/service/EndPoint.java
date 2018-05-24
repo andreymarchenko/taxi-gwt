@@ -13,6 +13,6 @@ import java.util.List;
 public interface EndPoint extends RestService {
 
     @POST
-    @Path("server/login")
+    @Path("user/login")
     void login(MethodCallback callback);
 }
