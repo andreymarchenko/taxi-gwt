@@ -6,6 +6,6 @@
         <g:HorizontalPanel ui:field="header">
             <g:Label ui:field="name"></g:Label>
         </g:HorizontalPanel>
-        <g:HorizontalPanel ui:field="mapPanel"/>
+        <g:HorizontalPanel ui:field="contentPanel"/>
     </g:HTMLPanel>
 </ui:UiBinder>

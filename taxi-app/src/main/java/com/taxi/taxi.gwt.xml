@@ -12,8 +12,4 @@
     <!-- Specify the app entry point class.                   -->
     <entry-point class='com.taxi.client.taxi'/>
 
-
-    <!-- Specify the app servlets.                   -->
-    <servlet path='/taxiService' class='com.taxi.server.taxiServiceImpl'/>
-
 </module>
