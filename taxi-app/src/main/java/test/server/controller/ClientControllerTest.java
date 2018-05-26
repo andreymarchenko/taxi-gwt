@@ -1,5 +1,6 @@
 package test.server.controller;
 
+import com.ibm.icu.impl.Assert;
 import com.taxi.server.model.Client;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -7,13 +8,11 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.junit.Assert;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
 class ClientControllerTest {
 
@@ -38,12 +37,23 @@ class ClientControllerTest {
                 HttpClientBuilder.create().build().execute(request);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAllClient() throws ClientProtocolException, IOException {
-        assertNotEquals(null, getAllClients());
+        org.junit.Assert.assertNotEquals(null, getAllClients());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
+    void getClient() throws ClientProtocolException, IOException {
+        HttpUriRequest request = new HttpGet("http://127.0.0.1:8888/api/client/get/1");
+
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+        Client client = RestTestUtil.retrieveResourceFromResponse(
+                response, Client.class);
+
+        org.junit.Assert.assertNotEquals(null, client);
+    }
+
+    @Test
     void createClient() throws ClientProtocolException, IOException {
 
         // Creating of client
@@ -51,7 +61,8 @@ class ClientControllerTest {
                 "http://127.0.0.1:8888/api/client/create/cl1/cl1/abc" );
         HttpResponse response =
                 HttpClientBuilder.create().build().execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+        org.junit.Assert.assertEquals(response.getStatusLine().getStatusCode(),
+                HttpStatus.SC_OK);
 
         // Check of creating client
         List<Client> clients = getAllClients();
@@ -74,33 +85,19 @@ class ClientControllerTest {
 
         if(!isOk)
         {
-            assertTrue(false);
+            org.junit.Assert.assertTrue(false);
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void updateClient() {
     }
 
-    @org.junit.jupiter.api.Test
-    void getClient() throws ClientProtocolException, IOException {
-        // Given
-        HttpUriRequest request = new HttpGet("http://127.0.0.1:8888/api/client/get/1");
-
-        // When
-        HttpResponse response = HttpClientBuilder.create().build().execute(request);
-
-        // Then
-        Client client = RestTestUtil.retrieveResourceFromResponse(
-                response, Client.class);
-        assertNotEquals(null, client);
-    }
-
-    @org.junit.jupiter.api.Test
+    @Test
     void login() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void delete() {
     }
 }
