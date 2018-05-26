@@ -10,6 +10,7 @@ public class Login extends PopupPanel {
     private VerticalPanel contentPanel;
 
     private VerticalPanel loginPanel;
+    private VerticalPanel registrationPanel;
 
     private Label header;
     private TextBox login;
@@ -28,6 +29,7 @@ public class Login extends PopupPanel {
         password = new PasswordTextBox();
         loginButton = new Button();
         registrationButton = new Button();
+        registrationPanel = new VerticalPanel();
         contentPanel = new VerticalPanel();
         create();
     }
@@ -47,7 +49,12 @@ public class Login extends PopupPanel {
         loginPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 5, Style.Unit.PX);
         loginPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 2.5, Style.Unit.PX);
 
+        registrationPanel.getElement().getStyle().setBackgroundColor("White");
+        registrationPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 5, Style.Unit.PX);
+        registrationPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 10, Style.Unit.PX);
+
         createBorder(loginPanel, "#a3a3a3");
+        createBorder(registrationPanel, "#a3a3a3");
 
         header.getElement().getStyle().setColor("#545454");
         header.getElement().getStyle().setFontSize(Window.getClientHeight() / 25, Style.Unit.PX);
@@ -63,7 +70,7 @@ public class Login extends PopupPanel {
         loginPanel.add(loginLabel);
 
         login.getElement().getStyle().setWidth(Window.getClientWidth() / 5.6, Style.Unit.PX);
-        login.getElement().getStyle().setFontSize(Window.getClientHeight() / 50, Style.Unit.PX);
+        login.getElement().getStyle().setFontSize(Window.getClientHeight() / 40, Style.Unit.PX);
         login.getElement().getStyle().setColor("#c9c9c9");
         login.getElement().getStyle().setMarginLeft(Window.getClientHeight() / 50, Style.Unit.PX);
         loginPanel.add(login);
@@ -75,7 +82,7 @@ public class Login extends PopupPanel {
         loginPanel.add(passwordLabel);
 
         password.getElement().getStyle().setWidth(Window.getClientWidth() / 5.6, Style.Unit.PX);
-        password.getElement().getStyle().setFontSize(Window.getClientHeight() / 50, Style.Unit.PX);
+        password.getElement().getStyle().setFontSize(Window.getClientHeight() / 40, Style.Unit.PX);
         password.getElement().getStyle().setColor("#c9c9c9");
         password.getElement().getStyle().setMarginLeft(Window.getClientHeight() / 50, Style.Unit.PX);
         loginPanel.add(password);
@@ -83,16 +90,17 @@ public class Login extends PopupPanel {
         loginButton.setText("Вход");
         loginButton.getElement().getStyle().setWidth(Window.getClientWidth() / 5.6, Style.Unit.PX);
         loginButton.getElement().getStyle().setMarginLeft(Window.getClientHeight() / 50, Style.Unit.PX);
-        loginButton.getElement().getStyle().setFontSize(Window.getClientHeight() / 32, Style.Unit.PX);
+        loginButton.getElement().getStyle().setFontSize(Window.getClientHeight() / 30, Style.Unit.PX);
 
         loginPanel.add(loginButton);
 
         registrationButton.setText("Регистрация");
         registrationButton.getElement().getStyle().setWidth(Window.getClientWidth() / 5.6, Style.Unit.PX);
         registrationButton.getElement().getStyle().setMarginLeft(Window.getClientHeight() / 50, Style.Unit.PX);
-        registrationButton.getElement().getStyle().setFontSize(Window.getClientHeight() / 32, Style.Unit.PX);
+        registrationButton.getElement().getStyle().setFontSize(Window.getClientHeight() / 30, Style.Unit.PX);
+        registrationButton.getElement().getStyle().setMarginTop(Window.getClientHeight() / 45, Style.Unit.PX);
 
-        loginPanel.add(registrationButton);
+        registrationPanel.add(registrationButton);
 
         contentPanel.getElement().getStyle().setWidth(Window.getClientWidth() / 5, Style.Unit.PX);
         contentPanel.getElement().getStyle().setHeight(Window.getClientHeight() / 1.9, Style.Unit.PX);
@@ -101,6 +109,7 @@ public class Login extends PopupPanel {
         contentPanel.getElement().getStyle().setMarginTop(Window.getClientHeight()  / 6, Style.Unit.PX);
 
         contentPanel.add(loginPanel);
+        contentPanel.add(registrationPanel);
 
         this.add(contentPanel);
     }
