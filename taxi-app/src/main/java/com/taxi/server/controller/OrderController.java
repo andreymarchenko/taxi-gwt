@@ -63,7 +63,7 @@ public class OrderController {
             return null;
         }
         orderDao.save(operatorMapper.createEntity(orderDto));
-        Order order = orderDao.getOrder(orderDto.getID());
+        Order order = orderDao.getOrder(orderDto.getId());
         return operatorMapper.createDto(order);
     }
 }

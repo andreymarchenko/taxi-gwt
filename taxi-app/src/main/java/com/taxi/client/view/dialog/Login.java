@@ -63,7 +63,7 @@ public class Login extends PopupPanel {
         loginPanel.add(loginLabel);
 
         login.getElement().getStyle().setWidth(Window.getClientWidth() / 5.6, Style.Unit.PX);
-        login.getElement().getStyle().setFontSize(Window.getClientHeight() / 55, Style.Unit.PX);
+        login.getElement().getStyle().setFontSize(Window.getClientHeight() / 50, Style.Unit.PX);
         login.getElement().getStyle().setColor("#c9c9c9");
         login.getElement().getStyle().setMarginLeft(Window.getClientHeight() / 50, Style.Unit.PX);
         loginPanel.add(login);
@@ -75,7 +75,7 @@ public class Login extends PopupPanel {
         loginPanel.add(passwordLabel);
 
         password.getElement().getStyle().setWidth(Window.getClientWidth() / 5.6, Style.Unit.PX);
-        password.getElement().getStyle().setFontSize(Window.getClientHeight() / 55, Style.Unit.PX);
+        password.getElement().getStyle().setFontSize(Window.getClientHeight() / 50, Style.Unit.PX);
         password.getElement().getStyle().setColor("#c9c9c9");
         password.getElement().getStyle().setMarginLeft(Window.getClientHeight() / 50, Style.Unit.PX);
         loginPanel.add(password);
@@ -111,5 +111,13 @@ public class Login extends PopupPanel {
 
     public Button getRegistrationButton() {
         return this.registrationButton;
+    }
+
+    public TextBox getLogin() {
+        return login;
+    }
+
+    public TextBox getPassword() {
+        return password;
     }
 }

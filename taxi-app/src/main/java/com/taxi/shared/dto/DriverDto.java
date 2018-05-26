@@ -17,7 +17,7 @@ public class DriverDto implements Serializable {
                      @JsonProperty("description") String description,
                      @JsonProperty("car") String car,
                      @JsonProperty("status") StatusDto status) {
-        this.ID = id;
+        this.id = id;
         this.name = name;
         this.password = password;
         this.description = description;
@@ -25,7 +25,7 @@ public class DriverDto implements Serializable {
         this.status = status;
     }
 
-    private int ID;
+    private int id;
 
     private String name;
 
@@ -45,12 +45,12 @@ public class DriverDto implements Serializable {
 
     private StatusDto status;
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

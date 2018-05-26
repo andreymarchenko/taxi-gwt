@@ -36,7 +36,6 @@ public abstract class AbstractGenericDAO<T, PK extends Serializable> {
         transaction.begin();
         try {
             em.persist(object);
-
             transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
