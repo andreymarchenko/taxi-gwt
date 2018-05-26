@@ -2,11 +2,9 @@ package com.taxi.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.maps.client.LoadApi;
-import com.google.gwt.maps.client.events.click.ClickMapEvent;
-import com.google.gwt.maps.client.events.click.ClickMapHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -16,6 +14,7 @@ import com.taxi.client.presenter.Presenter;
 import com.taxi.client.view.dialog.Login;
 import com.taxi.client.view.dialog.NumberDialog;
 import com.taxi.client.view.dialog.OrderDialog;
+import com.taxi.client.view.dialog.Registration;
 import com.taxi.client.view.map.Map;
 
 import javax.inject.Inject;
@@ -43,6 +42,7 @@ public class View extends Composite {
     private OrderDialog orderDialog;
     private NumberDialog numberDialog;
     private Login login;
+    private Registration registration;
 
     @Inject
     public View(EventBus eventBus) {
@@ -95,6 +95,19 @@ public class View extends Composite {
             numberDialog.show();
         });
 
+        login.getRegistrationButton().addClickHandler(event -> {
+            login.hide();
+            registration = new Registration();
+            registration.show();
+        });
+
+        registration.getUserType().addChangeHandler(new ChangeHandler() {
+            public void onChange(ChangeEvent event) {
+                boolean isVisible = registration.getUserType().getSelectedItemText().equals("Водитель");
+                registration.getCarNumberLabel().setVisible(isVisible);
+                registration.getCarNumber().setVisible(isVisible);
+            }
+        });
 
         RootPanel.get("root").add(this);
     }
