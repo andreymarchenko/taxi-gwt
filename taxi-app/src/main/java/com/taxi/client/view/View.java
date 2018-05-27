@@ -15,10 +15,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.EventBus;
 import com.taxi.client.presenter.Presenter;
-import com.taxi.client.view.dialog.Login;
-import com.taxi.client.view.dialog.NumberDialog;
-import com.taxi.client.view.dialog.OrderDialog;
-import com.taxi.client.view.dialog.Registration;
+import com.taxi.client.view.dialog.*;
 import com.taxi.client.view.map.Map;
 import com.taxi.shared.dto.ClientDto;
 import com.taxi.shared.dto.LoginDto;
@@ -75,6 +72,7 @@ public class View extends Composite {
             contentPanel.add(map);
             orderDialog = new OrderDialog();
             orderDialog.show();
+
             map.setOrderDialog(orderDialog);
             map.bind();
         };
