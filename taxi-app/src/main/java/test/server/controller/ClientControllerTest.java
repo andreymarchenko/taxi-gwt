@@ -2,11 +2,14 @@ package test.server.controller;
 
 import com.ibm.icu.impl.Assert;
 import com.taxi.server.model.Client;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
@@ -14,9 +17,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-class ClientControllerTest {
+import com.taxi.shared.dto.ClientDto;
 
-    List<Client> getAllClients() throws ClientProtocolException, IOException
+public class ClientControllerTest {
+
+    public List<Client> getAllClients() throws ClientProtocolException, IOException
     {
         HttpUriRequest request = new HttpGet(
                 "http://127.0.0.1:8888/api/client/get/all" );
@@ -28,7 +33,7 @@ class ClientControllerTest {
         return clients;
     }
 
-    void deleteClient(int ID) throws ClientProtocolException, IOException
+    public void deleteClient(int ID) throws ClientProtocolException, IOException
     {
         HttpUriRequest request = new HttpGet(
                 "http://127.0.0.1:8888/api/client/delete/" +
@@ -38,12 +43,12 @@ class ClientControllerTest {
     }
 
     @Test
-    void getAllClient() throws ClientProtocolException, IOException {
+    public void getAllClient() throws ClientProtocolException, IOException {
         org.junit.Assert.assertNotEquals(null, getAllClients());
     }
 
     @Test
-    void getClient() throws ClientProtocolException, IOException {
+    public void getClient() throws ClientProtocolException, IOException {
         HttpUriRequest request = new HttpGet("http://127.0.0.1:8888/api/client/get/1");
 
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
@@ -54,11 +59,17 @@ class ClientControllerTest {
     }
 
     @Test
-    void createClient() throws ClientProtocolException, IOException {
-
+    public void createClient() throws ClientProtocolException, IOException {
         // Creating of client
-        HttpUriRequest request = new HttpGet(
-                "http://127.0.0.1:8888/api/client/create/cl1/cl1/abc" );
+        ClientDto clientDto = new ClientDto();
+        clientDto.setName("cl1");
+        clientDto.setPassword("cl1");
+        clientDto.setDescription("abc");
+        HttpPost request = new HttpPost(
+                "http://127.0.0.1:8888/api/client/create");
+        request.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        HttpEntity entity = new StringEntity(clientDto.toString());
+        request.setEntity(entity);
         HttpResponse response =
                 HttpClientBuilder.create().build().execute(request);
         org.junit.Assert.assertEquals(response.getStatusLine().getStatusCode(),
@@ -90,14 +101,14 @@ class ClientControllerTest {
     }
 
     @Test
-    void updateClient() {
+    public void updateClient() {
     }
 
     @Test
-    void login() {
+    public void login() {
     }
 
     @Test
-    void delete() {
+    public void delete() {
     }
 }
