@@ -4,6 +4,8 @@ import com.google.gwt.ajaxloader.client.ArrayHelper;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
@@ -35,6 +37,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.taxi.client.presenter.Presenter;
 import com.taxi.client.service.EndPoint;
+import com.taxi.client.view.dialog.OrderDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +52,7 @@ public class Map extends Composite {
     private LatLng destination;
     private Integer clickNumber = 0;
     private Boolean isRouteBuilt = false;
-
+    private OrderDialog orderDialog;
 
     private final EndPoint endPoint = GWT.create(EndPoint.class);
 
@@ -59,7 +62,6 @@ public class Map extends Composite {
         initWidget(panel);
         drawMap();
         drawMapAds();
-        bind();
     }
 
     public void bind() {
@@ -77,6 +79,14 @@ public class Map extends Composite {
                     final Marker marker = Marker.newInstance(options);
                     marker.setMap(mapWidget);
 
+                    if (markers.size() == 0) {
+                        origin = dblClickMapEvent.getMouseEvent().getLatLng();
+                        orderDialog.getFrom().setText(dblClickMapEvent.getMouseEvent().getLatLng().getToString());
+                    }
+                    else if (markers.size() == 1) {
+                        destination = dblClickMapEvent.getMouseEvent().getLatLng();
+                        orderDialog.getTo().setText(dblClickMapEvent.getMouseEvent().getLatLng().getToString());
+                    }
 
                     marker.addDragHandler(new DragMapHandler() {
                         @Override
@@ -86,7 +96,17 @@ public class Map extends Composite {
                     });
                     markers.add(marker);
                 }
-                /*if (!isRouteBuilt) {
+
+                orderDialog.getCalculateRouteButton().addClickHandler(new ClickHandler() {
+                    @Override
+                    public void onClick(ClickEvent event) {
+                        if(markers.size() == 2) {
+                            drawDirections();
+                        }
+                    }
+                });
+
+                if (!isRouteBuilt) {
                     clickNumber++;
                     if (clickNumber == 1) {
                         origin = dblClickMapEvent.getMouseEvent().getLatLng();
@@ -95,7 +115,7 @@ public class Map extends Composite {
                         destination = dblClickMapEvent.getMouseEvent().getLatLng();
                         isRouteBuilt = true;
                     }
-                }*/
+                }
             }
         });
     }
@@ -111,7 +131,6 @@ public class Map extends Composite {
 
     private void drawMap() {
         mapWidget = new MapWidget(createDefaultMapOptions());
-        drawDirections();
         panel.add(mapWidget);
         mapWidget.setSize(Double.toString(Window.getClientWidth()), Double.toString(14.0 / 15 * Window.getClientHeight() - 8));
     }
@@ -120,9 +139,6 @@ public class Map extends Composite {
         final DirectionsRenderer directionsDisplay = DirectionsRenderer.newInstance(
                 DirectionsRendererOptions.newInstance());
         directionsDisplay.setMap(mapWidget);
-
-        origin = LatLng.newInstance(56.238502, 43.861445);
-        destination = LatLng.newInstance(56.293867, 43.978136);
 
         DirectionsRequest request = DirectionsRequest.newInstance();
         request.setOrigin(origin);
@@ -267,5 +283,9 @@ public class Map extends Composite {
 
     public MapWidget getMapWidget() {
         return this.mapWidget;
+    }
+
+    public void setOrderDialog(OrderDialog orderDialog) {
+        this.orderDialog = orderDialog;
     }
 }

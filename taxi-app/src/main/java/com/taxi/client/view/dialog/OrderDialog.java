@@ -35,6 +35,14 @@ public class OrderDialog extends PopupPanel {
         widget.getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
     }
 
+    public Button getCalculateRouteButton() {
+        return calculateRouteButton;
+    }
+
+    public Button getMakeOrderButton() {
+        return makeOrderButton;
+    }
+
     private void createMarkUp() {
         this.getElement().getStyle().setBackgroundColor("White");
         this.getElement().getStyle().setHeight(Window.getClientHeight() / 3, Style.Unit.PX);
@@ -174,5 +182,13 @@ public class OrderDialog extends PopupPanel {
         toPanel.add(makeOrderButton);
 
         fromToPanel.add(toPanel);
+    }
+
+    public TextBox getFrom() {
+        return from;
+    }
+
+    public TextBox getTo() {
+        return to;
     }
 }

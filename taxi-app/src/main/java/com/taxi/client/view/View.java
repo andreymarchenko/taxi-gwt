@@ -73,7 +73,10 @@ public class View extends Composite {
             map = new Map();
             map.setPresenter(presenter);
             contentPanel.add(map);
-            prepareMap();
+            orderDialog = new OrderDialog();
+            orderDialog.show();
+            map.setOrderDialog(orderDialog);
+            map.bind();
         };
 
         LoadApi.go(onLoad, loadLibraries, sensor);
@@ -104,8 +107,6 @@ public class View extends Composite {
                         login.getPassword().getText()));
                 login.hide();
                 loadMapApi();
-                orderDialog = new OrderDialog();
-                orderDialog.show();
                 numberDialog = new NumberDialog();
                 numberDialog.show();
             }
@@ -148,14 +149,6 @@ public class View extends Composite {
 
     public void setActive(Boolean active) {
         this.isActive = active;
-    }
-
-    private void prepareMap() {
-        if (map != null) {
-            map.getMapWidget().addClickHandler(clickMapEvent -> {
-
-            });
-        }
     }
 
     public void setPresenter(Presenter presenter) {
