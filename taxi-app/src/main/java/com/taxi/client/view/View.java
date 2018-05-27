@@ -113,11 +113,8 @@ public class View extends Composite {
 
         login.getRegistrationButton().addClickHandler(event -> {
             login.hide();
-            loadMapApi();
-            orderDialog = new OrderDialog();
-            orderDialog.show();
-            numberDialog = new NumberDialog();
-            numberDialog.show();
+            registration = new Registration();
+            registration.show();
         });
     }
 
@@ -125,9 +122,24 @@ public class View extends Composite {
 
         registration.getUserType().addChangeHandler(new ChangeHandler() {
             public void onChange(ChangeEvent event) {
-                boolean isVisible = registration.getUserType().getSelectedItemText().equals("");
+                boolean isVisible = registration.getUserType().getSelectedItemText().equals("Водитель");
                 registration.getCarNumberLabel().setVisible(isVisible);
                 registration.getCarNumber().setVisible(isVisible);
+            }
+        });
+
+        registration.getRegistrationButton().addClickHandler(event -> {
+            if (login.getLogin().getText() != "" && login.getPassword().getText() != "") {
+                presenter.login(
+                        new LoginDto(
+                                login.getLogin().getText(),
+                                login.getPassword().getText()));
+                login.hide();
+                loadMapApi();
+                orderDialog = new OrderDialog();
+                orderDialog.show();
+                numberDialog = new NumberDialog();
+                numberDialog.show();
             }
         });
 
