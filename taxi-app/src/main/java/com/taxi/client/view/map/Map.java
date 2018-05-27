@@ -13,8 +13,6 @@ import com.google.gwt.maps.client.events.channelnumber.ChannelNumberChangeMapEve
 import com.google.gwt.maps.client.events.channelnumber.ChannelNumberChangeMapHandler;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
-import com.google.gwt.maps.client.events.dblclick.DblClickMapEvent;
-import com.google.gwt.maps.client.events.dblclick.DblClickMapHandler;
 import com.google.gwt.maps.client.events.format.FormatChangeMapEvent;
 import com.google.gwt.maps.client.events.format.FormatChangeMapHandler;
 import com.google.gwt.maps.client.events.mapchange.MapChangeMapEvent;
@@ -29,10 +27,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.taxi.client.presenter.Presenter;
 import com.taxi.client.service.EndPoint;
-import com.taxi.client.view.dialog.OrderDialog;
-import com.taxi.shared.Login;
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,22 +50,7 @@ public class Map extends Composite {
     }
 
     public void bind() {
-        mapWidget.addDblClickHandler(new DblClickMapHandler() {
-            @Override
-            public void onEvent(final DblClickMapEvent dblClickMapEvent) {
-                endPoint.login(new MethodCallback() {
-                    @Override
-                    public void onFailure(Method method, Throwable throwable) {
 
-                    }
-
-                    @Override
-                    public void onSuccess(Method method, Object o) {
-                        GWT.log("Привет");
-                    }
-                });
-            }
-        });
     }
 
     private MapOptions createDefaultMapOptions() {

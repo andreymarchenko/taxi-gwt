@@ -15,13 +15,13 @@ public class OperatorDto implements Serializable {
                      @JsonProperty("name") String name,
                      @JsonProperty("password") String password,
                      @JsonProperty("description") String description) {
-        this.ID = id;
+        this.id = id;
         this.name = name;
         this.password = password;
         this.description = description;
     }
 
-    private int ID;
+    private int id;
 
     private String name;
 
@@ -30,11 +30,11 @@ public class OperatorDto implements Serializable {
     private String description;
 
     public int getID() {
-        return ID;
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -20,7 +20,7 @@ public class OrderDto implements Serializable {
                      @JsonProperty("timestamp") Date timestamp,
                      @JsonProperty("price") double price,
                      @JsonProperty("paymentType") PaymentTypeDto paymentType) {
-        this.ID = id;
+        this.id = id;
         this.driver = driver;
         this.client = client;
         this.start = start;
@@ -30,7 +30,7 @@ public class OrderDto implements Serializable {
         this.paymentType = paymentType;
     }
 
-    private int ID;
+    private int id;
 
     private DriverDto driver;
 
@@ -46,12 +46,12 @@ public class OrderDto implements Serializable {
 
     private PaymentTypeDto paymentType;
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
     public void setID(int ID) {
-        this.ID = ID;
+        this.id = ID;
     }
 
     public DriverDto getDriver() {

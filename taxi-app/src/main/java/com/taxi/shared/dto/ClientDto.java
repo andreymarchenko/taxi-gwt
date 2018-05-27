@@ -16,13 +16,13 @@ public class ClientDto implements Serializable {
                      @JsonProperty("name") String name,
                      @JsonProperty("password") String password,
                      @JsonProperty("description") String description) {
-        this.ID = id;
+        this.id = id;
         this.name = name;
         this.password = password;
         this.description = description;
     }
 
-    private int ID;
+    private int id;
 
     private String name;
 
@@ -30,12 +30,12 @@ public class ClientDto implements Serializable {
 
     private String description;
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
