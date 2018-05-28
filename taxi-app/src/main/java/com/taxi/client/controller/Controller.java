@@ -34,16 +34,15 @@ public class Controller {
         eventBus.addHandler(LoginCommand.TYPE, new LoginCommandHandler() {
             @Override
             public void onLogin(LoginDto loginDto, LoginCommand loginCommand) {
-                endPoint.login(loginDto, new MethodCallback() {
+                endPoint.login(loginDto, new MethodCallback<ClientDto>() {
                     @Override
                     public void onFailure(Method method, Throwable throwable) {
-                        System.out.println("НЕ ЗАЛОГИНИЛСЯ");
+
                     }
 
                     @Override
-                    public void onSuccess(Method method, Object o) {
-                        clientDataModel.setActive(true);
-                        System.out.println("ЗАЛОГИНИЛСЯ");
+                    public void onSuccess(Method method, ClientDto clientDto) {
+                        clientDataModel.setActiveClient(clientDto);
                     }
                 });
             }

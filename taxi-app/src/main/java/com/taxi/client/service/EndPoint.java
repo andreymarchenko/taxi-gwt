@@ -14,7 +14,7 @@ public interface EndPoint extends RestService {
     @POST
     @Path("/client/login")
     void login(LoginDto loginDto,
-               MethodCallback callback);
+               MethodCallback<ClientDto> callback);
 
     @POST
     @Path("/client/create")

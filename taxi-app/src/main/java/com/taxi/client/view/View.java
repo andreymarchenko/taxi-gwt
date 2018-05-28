@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -47,11 +48,18 @@ public class View extends Composite {
     private NumberDialog numberDialog;
     private Login login;
     private Registration registration;
-    private Boolean isActive;
+    private Boolean isLogged;
+    private Storage stockStore;
+    private Button logOutButton;
 
     @Inject
     public View(EventBus eventBus) {
         this.eventBus = eventBus;
+        login = new Login();
+        numberDialog = new NumberDialog();
+        stockStore = Storage.getLocalStorageIfSupported();
+        logOutButton = new Button("Log out");
+        bind();
     }
 
     private void loadMapApi() {
@@ -90,9 +98,16 @@ public class View extends Composite {
         header.getElement().getStyle().setWidth(Window.getClientWidth(), Style.Unit.PX);
         header.getElement().getStyle().setHeight(Window.getClientHeight() / 15, Style.Unit.PX);
 
-        login = new Login();
-        login.show();
-        bind();
+        header.add(logOutButton);
+
+        if (stockStore.getItem("login") != null) {
+            login.hide();
+            loadMapApi();
+            numberDialog.show();
+        }
+        else {
+            login.show();
+        }
         RootPanel.get("root").add(this);
     }
 
@@ -103,10 +118,14 @@ public class View extends Composite {
                         new LoginDto(
                         login.getLogin().getText(),
                         login.getPassword().getText()));
-                login.hide();
-                loadMapApi();
-                numberDialog = new NumberDialog();
-                numberDialog.show();
+                if (isLogged) {
+                    stockStore.setItem("login", login.getLogin().getText());
+                    stockStore.setItem("password", login.getPassword().getText());
+                    login.hide();
+                    loadMapApi();
+                    numberDialog = new NumberDialog();
+                    numberDialog.show();
+                }
             }
         });
 
@@ -115,11 +134,17 @@ public class View extends Composite {
             registration = new Registration();
             registration.show();
         });
-    }
 
-    public void loginUser(ClientDto clientDto) {
+        logOutButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                stockStore.clear();
+                isLogged = false;
+                login.show();
+            }
+        });
 
-        registration.getUserType().addChangeHandler(new ChangeHandler() {
+/*        registration.getUserType().addChangeHandler(new ChangeHandler() {
             public void onChange(ChangeEvent event) {
                 boolean isVisible = registration.getUserType().getSelectedItemText().equals("Водитель");
                 registration.getCarNumberLabel().setVisible(isVisible);
@@ -140,16 +165,19 @@ public class View extends Composite {
                 numberDialog = new NumberDialog();
                 numberDialog.show();
             }
-        });
-
-        RootPanel.get("root").add(this);
-    }
-
-    public void setActive(Boolean active) {
-        this.isActive = active;
+        });*/
     }
 
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
+    }
+
+
+    public Boolean getLogged() {
+        return isLogged;
+    }
+
+    public void setLogged(Boolean logged) {
+        isLogged = logged;
     }
 }
