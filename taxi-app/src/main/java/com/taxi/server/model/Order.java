@@ -1,7 +1,5 @@
 package com.taxi.server.model;
 
-import com.taxi.shared.dto.PaymentTypeDto;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -35,8 +33,7 @@ public class Order {
     private double price;
 
     @Column(name="payment_type")
-    @Enumerated(EnumType.STRING)
-    private PaymentTypeDto paymentType;
+    private String paymentType;
 
     public int getID() {
         return ID;
@@ -94,11 +91,11 @@ public class Order {
         this.price = price;
     }
 
-    public PaymentTypeDto getPaymentType() {
+    public String getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(PaymentTypeDto paymentTypeDto) {
+    public void setPaymentType(String paymentTypeDto) {
         this.paymentType = paymentTypeDto;
     }
 }

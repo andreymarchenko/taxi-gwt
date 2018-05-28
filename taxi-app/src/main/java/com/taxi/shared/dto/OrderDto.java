@@ -19,7 +19,7 @@ public class OrderDto implements Serializable {
                      @JsonProperty("finish") String finish,
                      @JsonProperty("timestamp") Date timestamp,
                      @JsonProperty("price") double price,
-                     @JsonProperty("paymentType") PaymentTypeDto paymentType) {
+                     @JsonProperty("paymentType") String paymentType) {
         this.id = id;
         this.driver = driver;
         this.client = client;
@@ -44,7 +44,7 @@ public class OrderDto implements Serializable {
 
     private double price;
 
-    private PaymentTypeDto paymentType;
+    private String paymentType;
 
     public int getId() {
         return id;
@@ -102,11 +102,11 @@ public class OrderDto implements Serializable {
         this.price = price;
     }
 
-    public PaymentTypeDto getPaymentType() {
+    public String getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(PaymentTypeDto paymentType) {
+    public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
     }
 }
