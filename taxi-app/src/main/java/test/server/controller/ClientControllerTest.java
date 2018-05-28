@@ -253,7 +253,7 @@ public class ClientControllerTest {
 
         CloseableHttpResponse response = httpClient.execute(request);
         org.junit.Assert.assertEquals(response.getStatusLine().getStatusCode(),
-                HttpStatus.SC_NO_CONTENT);
+                HttpStatus.SC_OK);
         httpClient.close();
 
         // Delete new client

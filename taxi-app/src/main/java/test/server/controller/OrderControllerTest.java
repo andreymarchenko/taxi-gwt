@@ -28,7 +28,6 @@ import org.junit.Test;
 import com.taxi.shared.dto.OrderDto;
 import com.taxi.shared.dto.DriverDto;
 import com.taxi.shared.dto.ClientDto;
-import com.taxi.shared.dto.PaymentTypeDto;
 import com.taxi.shared.dto.StatusDto;
 import java.util.Date;
 import java.util.Locale;
@@ -104,14 +103,7 @@ public class OrderControllerTest {
             }
             ++pos; // skip ']'
             String subValue = value.substring(1, value.length() - 1);
-            if (subValue.equals(PaymentTypeDto.CARD))
-            {
-                order.setPaymentType(PaymentTypeDto.CARD);
-            }
-            else
-            {
-                order.setPaymentType(PaymentTypeDto.CASH);
-            }
+            order.setPaymentType(subValue);
         }
 
         return pos;
@@ -338,7 +330,7 @@ public class OrderControllerTest {
         order.setFinish("testfinish");
         order.setTimestamp(new Date());
         order.setPrice(100.5);
-        order.setPaymentType(PaymentTypeDto.CASH);
+        order.setPaymentType("CASH");
         int orderID = createFakeOrder(order);
         order.setID(orderID);
     }
