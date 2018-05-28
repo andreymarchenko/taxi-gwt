@@ -23,16 +23,12 @@ import org.junit.Test;
 import com.taxi.shared.dto.DriverDto;
 import com.taxi.shared.dto.StatusDto;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
 public class DriverControllerTest {
 
-    public int parseContent(String str, int startPos, List<DriverDto> drivers) {
+    public static int parseDriver(String str, int startPos, DriverDto driver) {
         String subStr = str.substring(startPos);
         int pos = 0;
         ++pos; // skip '['
-
-        DriverDto driver = new DriverDto();
 
         {
             String value = "";
@@ -104,12 +100,10 @@ public class DriverControllerTest {
             }
         }
 
-        drivers.add(driver);
-
         return pos;
     }
 
-    public List<DriverDto> getAllDrivers() throws ClientProtocolException, IOException
+    public static List<DriverDto> getAllDrivers() throws ClientProtocolException, IOException
     {
         HttpUriRequest request = new HttpGet(
                 "http://127.0.0.1:8888/api/driver/get/all" );
@@ -122,7 +116,9 @@ public class DriverControllerTest {
         int i = 0;
         while (i < entityString.length())
         {
-            i += parseContent(entityString, i, drivers);
+            DriverDto driver = new DriverDto();
+            i += parseDriver(entityString, i, driver);
+            drivers.add(driver);
             ++i; // skip ','
         }
 

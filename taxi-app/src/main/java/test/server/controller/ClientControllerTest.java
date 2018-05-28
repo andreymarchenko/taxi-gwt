@@ -24,13 +24,11 @@ import com.taxi.shared.dto.ClientDto;
 
 public class ClientControllerTest {
 
-    public int parseContent(String str, int startPos, List<ClientDto> clients) {
+    public static int parseClient(String str, int startPos, ClientDto client) {
 
         String subStr = str.substring(startPos);
         int pos = 0;
         ++pos; // skip '['
-
-        ClientDto client = new ClientDto();
 
         {
             String value = "";
@@ -75,12 +73,10 @@ public class ClientControllerTest {
             client.setDescription(subValue);
         }
 
-        clients.add(client);
-
         return pos;
     }
 
-    public List<ClientDto> getAllClients() throws ClientProtocolException, IOException
+    public static List<ClientDto> getAllClients() throws ClientProtocolException, IOException
     {
         HttpUriRequest request = new HttpGet(
                 "http://127.0.0.1:8888/api/client/get/all" );
@@ -93,7 +89,9 @@ public class ClientControllerTest {
         int i = 0;
         while (i < entityString.length())
         {
-            i += parseContent(entityString, i, clients);
+            ClientDto client = new ClientDto();
+            i += parseClient(entityString, i, client);
+            clients.add(client);
             ++i; // skip ','
         }
 
