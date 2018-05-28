@@ -1,9 +1,5 @@
 package test.server.controller;
 
-import com.google.gwt.thirdparty.json.JSONArray;
-import com.google.gwt.thirdparty.json.JSONException;
-import com.google.gwt.thirdparty.json.JSONObject;
-import com.taxi.server.model.Client;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
