@@ -3,9 +3,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:HTMLPanel ui:field="root">
-        <g:HorizontalPanel ui:field="header">
-            <g:Label ui:field="name"></g:Label>
-        </g:HorizontalPanel>
+        <g:HorizontalPanel ui:field="header"/>
         <g:HorizontalPanel ui:field="contentPanel"/>
     </g:HTMLPanel>
 </ui:UiBinder>

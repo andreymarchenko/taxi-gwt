@@ -1,6 +1,8 @@
 package com.taxi.client.view.dialog;
 
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
@@ -24,9 +26,18 @@ public class OrderDialog extends PopupPanel {
     private Label paymentTypeLabel;
     private Button calculateRouteButton;
     private Button makeOrderButton;
+    private boolean isClickable = false;
 
     public OrderDialog() {
         createMarkUp();
+    }
+
+    public boolean isMakeOrderButtonClickable() {
+        return isClickable;
+    }
+
+    public void setMakeOrderButtonClickable(boolean clickable) {
+        isClickable = clickable;
     }
 
     private void createBorder(Widget widget, String color) {

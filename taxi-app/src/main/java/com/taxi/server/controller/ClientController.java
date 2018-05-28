@@ -8,6 +8,7 @@ import com.taxi.shared.dto.LoginDto;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/client")
@@ -19,8 +20,14 @@ public class ClientController{
 
     @Path("/login")
     @POST
-    public void login(LoginDto loginDto) {
-        System.out.println("ЛОГИН");
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public ClientDto login(LoginDto loginDto) {
+        List<Client> clients = clientDAO.checkByCredentials(loginDto);
+        if(clients.size() != 0) {
+            return clientMapper.createDto(clients.get(0));
+        }
+        else return null;
     }
 
     @Path("/create")

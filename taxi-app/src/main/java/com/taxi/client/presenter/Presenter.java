@@ -48,12 +48,15 @@ public class Presenter {
     }
 
     public void bind() {
-        //Переписать на addLoginEventHandler
         clientDataModel.addDataChangedEventHandler(new ChangeDataCommandHandler() {
             @Override
             public void onChangeData(ChangeDataCommand changeDataCommand) {
-                view.loginUser(clientDataModel.getActiveClient());
-                view.setActive(clientDataModel.isActive());
+                if (clientDataModel.getActiveClient()!= null) {
+                    view.setLogged(true);
+                }
+                else {
+                    view.setLogged(false);
+                }
             }
         });
     }
@@ -65,5 +68,4 @@ public class Presenter {
     public void registration(ClientDto clientDto) {
         eventBus.fireEvent(RegistrationCommand.create(clientDto));
     }
-
 }
