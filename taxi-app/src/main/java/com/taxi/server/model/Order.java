@@ -26,8 +26,7 @@ public class Order {
     private String finish;
 
     @Column(name = "timestamp", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date timestamp;
+    private String timestamp;
 
     @Column(name = "price", nullable = false)
     private double price;
@@ -75,11 +74,11 @@ public class Order {
         this.finish = finish;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

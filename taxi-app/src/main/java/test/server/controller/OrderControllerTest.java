@@ -13,41 +13,57 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import test.server.controller.DriverControllerTest;
-import test.server.controller.ClientControllerTest;
 import org.junit.Test;
 
 import com.taxi.shared.dto.OrderDto;
 import com.taxi.shared.dto.DriverDto;
 import com.taxi.shared.dto.ClientDto;
 import com.taxi.shared.dto.StatusDto;
-import java.util.Date;
-import java.util.Locale;
 
 public class OrderControllerTest {
 
-    public static int parseOrder(String str, int startPos, OrderDto order) throws ParseException {
+    public int parseOrder(String str, int startPos, OrderDto order) throws ParseException {
         String subStr = str.substring(startPos);
         int pos = 0;
         ++pos; // skip '['
 
-        DriverDto driver = new DriverDto();
-        pos += DriverControllerTest.parseDriver(subStr, pos, driver);
-        order.setDriver(driver);
-        ++pos; // skip ','
+        {
+            String value = "";
+            while (subStr.charAt(pos) != ',') {
+                value = value + subStr.charAt(pos);
+                ++pos;
+            }
+            ++pos; // skip ','
+            order.setID(Integer.parseInt(value));
+        }
 
-        ClientDto client = new ClientDto();
-        pos += ClientControllerTest.parseClient(subStr, pos, client);
-        order.setClient(client);
-        ++pos; // skip ','
+        {
+            String value = "";
+            while (subStr.charAt(pos) != ',') {
+                value = value + subStr.charAt(pos);
+                ++pos;
+            }
+            ++pos; // skip ','
+            order.setDriver(new DriverDto());
+            order.getDriver().setId(Integer.parseInt(value));
+        }
+
+        {
+            String value = "";
+            while (subStr.charAt(pos) != ',') {
+                value = value + subStr.charAt(pos);
+                ++pos;
+            }
+            ++pos; // skip ','
+            order.setClient(new ClientDto());
+            order.getClient().setId(Integer.parseInt(value));
+        }
 
         {
             String value = "";
@@ -78,10 +94,7 @@ public class OrderControllerTest {
                 ++pos;
             }
             ++pos; // skip ','
-            String subValue = value.substring(1, value.length() - 1);
-            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-            Date date = format.parse(subValue);
-            order.setTimestamp(date);
+            order.setPrice(Double.parseDouble(value));
         }
 
         {
@@ -92,7 +105,7 @@ public class OrderControllerTest {
             }
             ++pos; // skip ','
             String subValue = value.substring(1, value.length() - 1);
-            order.setPrice(Double.parseDouble(subValue));
+            order.setTimestamp(subValue);
         }
 
         {
@@ -109,7 +122,7 @@ public class OrderControllerTest {
         return pos;
     }
 
-    public static List<OrderDto> getOrdersByUser(String userType, int userID) throws ClientProtocolException, IOException, ParseException {
+    public List<OrderDto> getOrdersByUser(String userType, int userID) throws ClientProtocolException, IOException, ParseException {
         // userType values: "driver", "client"
         HttpUriRequest request = new HttpGet(
                 "http://127.0.0.1:8888/api/order/" + userType + "/" + Integer.toString(userID));
@@ -171,7 +184,7 @@ public class OrderControllerTest {
         orderStr += "\"client\":" + convertClientDtoToJSONString(order.getClient()) + ",";
         orderStr += "\"start\":\"" + order.getStart() + "\",";
         orderStr += "\"finish\":\"" + order.getFinish() + "\",";
-        orderStr += "\"timestamp\":\"" + order.getTimestamp().toString() + "\",";
+        orderStr += "\"timestamp\":\"" + order.getTimestamp() + "\",";
         orderStr += "\"price\":\"" + Double.toString(order.getPrice()) + "\",";
         orderStr += "\"paymentType\":\"" + order.getPaymentType() + "\"";
         orderStr += "}";
@@ -328,7 +341,7 @@ public class OrderControllerTest {
         order.setClient(client);
         order.setStart("teststart");
         order.setFinish("testfinish");
-        order.setTimestamp(new Date());
+        order.setTimestamp("2018-05-29");
         order.setPrice(100.5);
         order.setPaymentType("CASH");
         int orderID = createFakeOrder(order);
@@ -347,27 +360,38 @@ public class OrderControllerTest {
     @Test
     public void getOrder() throws IOException, ParseException {
         OrderDto order = new OrderDto();
-
         createTestOrder(order);
 
+        HttpUriRequest request = new HttpGet(
+                "http://127.0.0.1:8888/api/order/" +
+                        Integer.toString(order.getId()));
+        HttpResponse response =
+                HttpClientBuilder.create().build().execute(request);
+        org.junit.Assert.assertEquals(response.getStatusLine().getStatusCode(),
+                HttpStatus.SC_OK);
 
-
-
+        deleteFakeOrder(order);
     }
 
     @Test
-    public void getOrdersByClient() throws IOException {
+    public void getOrdersByClient() throws IOException, ParseException {
+        OrderDto order = new OrderDto();
+        createTestOrder(order);
+
+        List<OrderDto> ordersByClient =
+                getOrdersByUser("client", order.getClient().getId());
+        org.junit.Assert.assertNotEquals(null, ordersByClient);
+        deleteFakeOrder(order);
     }
 
     @Test
-    public void getOrdersByDriver() throws IOException {
-    }
+    public void getOrdersByDriver() throws IOException, ParseException {
+        OrderDto order = new OrderDto();
+        createTestOrder(order);
 
-    @Test
-    public void getFreeOrders() throws IOException {
-    }
-
-    @Test
-    public void startOrder() throws IOException {
+        List<OrderDto> ordersByDrawer =
+                getOrdersByUser("driver", order.getDriver().getId());
+        org.junit.Assert.assertNotEquals(null, ordersByDrawer);
+        deleteFakeOrder(order);
     }
 }

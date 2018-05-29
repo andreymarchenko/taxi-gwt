@@ -3,7 +3,7 @@ package com.taxi.shared.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class OrderDto implements Serializable {
 
@@ -17,7 +17,7 @@ public class OrderDto implements Serializable {
                      @JsonProperty("client") ClientDto client,
                      @JsonProperty("start") String start,
                      @JsonProperty("finish") String finish,
-                     @JsonProperty("timestamp") Date timestamp,
+                     @JsonProperty("timestamp") String timestamp,
                      @JsonProperty("price") double price,
                      @JsonProperty("paymentType") String paymentType) {
         this.id = id;
@@ -40,7 +40,7 @@ public class OrderDto implements Serializable {
 
     private String finish;
 
-    private Date timestamp;
+    private String timestamp;
 
     private double price;
 
@@ -86,11 +86,11 @@ public class OrderDto implements Serializable {
         this.finish = finish;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

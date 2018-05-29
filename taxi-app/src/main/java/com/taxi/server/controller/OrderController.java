@@ -66,4 +66,12 @@ public class OrderController {
         Order order = orderDao.getOrder(orderDto.getId());
         return operatorMapper.createDto(order);
     }
+
+    @Path("/delete/{id}")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void delete(@PathParam(value="id") int id) {
+        Order order = orderDao.getOrder(id);
+        orderDao.delete(order);
+    }
 }
