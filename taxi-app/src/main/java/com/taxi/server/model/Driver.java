@@ -15,7 +15,6 @@ public class Driver {
     private StatusDto status;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id", updatable = false, nullable = false)
     private int ID;
 

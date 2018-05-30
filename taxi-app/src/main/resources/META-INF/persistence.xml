@@ -6,10 +6,10 @@
              version="2.0">
     <persistence-unit name="manager" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.taxi.server.entity.ClientsEntity</class>
-        <class>com.taxi.server.entity.DriversEntity</class>
-        <class>com.taxi.server.entity.OperatorsEntity</class>
-        <class>com.taxi.server.entity.OrdersEntity</class>
+        <class>com.taxi.server.model.Client</class>
+        <class>com.taxi.server.model.Driver</class>
+        <class>com.taxi.server.model.Operator</class>
+        <class>com.taxi.server.model.Order</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

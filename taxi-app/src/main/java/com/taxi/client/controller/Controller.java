@@ -2,14 +2,12 @@ package com.taxi.client.controller;
 
 import com.google.gwt.core.client.GWT;
 import com.google.web.bindery.event.shared.EventBus;
-import com.taxi.client.commands.LoginCommand;
-import com.taxi.client.commands.LoginCommandHandler;
-import com.taxi.client.commands.RegistrationCommand;
-import com.taxi.client.commands.RegistrationCommandHandler;
+import com.taxi.client.commands.*;
 import com.taxi.client.model.ClientDataModel;
 import com.taxi.client.service.EndPoint;
 import com.taxi.shared.dto.ClientDto;
 import com.taxi.shared.dto.LoginDto;
+import com.taxi.shared.dto.OrderDto;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -59,6 +57,25 @@ public class Controller {
 
                     @Override
                     public void onSuccess(Method method, ClientDto clientDto) {
+
+                    }
+                });
+            }
+        });
+
+        eventBus.addHandler(CreateOrderCommand.TYPE, new CreateOrderCommandHandler() {
+            @Override
+            public void onCreateOrder(OrderDto orderDto, CreateOrderCommand createOrderCommand) {
+                OrderDto orderDto1 = orderDto;
+                endPoint.createOrder(orderDto, new MethodCallback<OrderDto>() {
+                    @Override
+                    public void onFailure(Method method, Throwable throwable) {
+                        System.out.println("ОрдерНЕТУТ");
+                    }
+
+                    @Override
+                    public void onSuccess(Method method, OrderDto orderDto) {
+                        System.out.println("ОрдерТУТ");
                     }
                 });
             }

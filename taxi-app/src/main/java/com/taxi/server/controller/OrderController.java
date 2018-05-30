@@ -1,5 +1,6 @@
 package com.taxi.server.controller;
 
+import com.google.gwt.core.client.GWT;
 import com.taxi.server.dao.OrderDAO;
 import com.taxi.server.model.Order;
 import com.taxi.server.utils.Mapper;
@@ -19,8 +20,11 @@ public class OrderController {
     @Path("/create")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createOrder(OrderDto order) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public OrderDto createOrder(OrderDto order) {
         orderDao.save(operatorMapper.createEntity(order));
+        GWT.log("ПРИШЕЛ");
+        return order;
     }
 
     @Path("/{id}")

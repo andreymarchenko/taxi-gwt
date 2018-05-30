@@ -1,13 +1,13 @@
 package com.taxi.server.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "orders", schema = "taxi")
 public class Order {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private int ID;
 

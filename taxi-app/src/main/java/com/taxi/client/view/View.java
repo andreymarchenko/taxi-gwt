@@ -4,11 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.maps.client.LoadApi;
-import com.google.gwt.maps.client.events.click.ClickMapEvent;
-import com.google.gwt.maps.client.events.click.ClickMapHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -18,12 +14,11 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.taxi.client.presenter.Presenter;
 import com.taxi.client.view.dialog.*;
 import com.taxi.client.view.map.Map;
-import com.taxi.shared.dto.ClientDto;
-import com.taxi.shared.dto.LoginDto;
-import org.apache.xpath.operations.Bool;
+import com.taxi.shared.dto.*;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class View extends Composite {
 
@@ -59,6 +54,7 @@ public class View extends Composite {
         numberDialog = new NumberDialog();
         stockStore = Storage.getLocalStorageIfSupported();
         logOutButton = new Button("Log out");
+        orderDialog = new OrderDialog();
         bind();
     }
 
@@ -78,9 +74,7 @@ public class View extends Composite {
             map = new Map();
             map.setPresenter(presenter);
             contentPanel.add(map);
-            orderDialog = new OrderDialog();
             orderDialog.show();
-
             map.setOrderDialog(orderDialog);
             map.bind();
         };
@@ -135,13 +129,33 @@ public class View extends Composite {
             registration.show();
         });
 
-        logOutButton.addClickHandler(new ClickHandler() {
+        orderDialog.getMakeOrderButton().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                stockStore.clear();
-                isLogged = false;
-                login.show();
+                if (orderDialog.isMakeOrderButtonClickable()) {
+                    map.getOrderInfoDialog().show();
+                    map.getDistance();
+                    Date currentDate = new Date();
+                    ClientDto clientDto = presenter.getActiveClient();
+                    presenter.createOrder(
+                            new OrderDto(
+                                    0,
+                                    new DriverDto (2, "ALEXANDER", "1234", "Good", "TOYOTA", StatusDto.FREE),
+                                    new ClientDto(1, "test", "test", ""),
+                                    map.getOrigin().getToString(),
+                                    map.getDestination().getToString(),
+                                    currentDate.toString(),
+                                    150.00,
+                                    "CARD"
+                            ));
+                }
             }
+        });
+
+        logOutButton.addClickHandler(event -> {
+            stockStore.clear();
+            isLogged = false;
+            login.show();
         });
 
 /*        registration.getUserType().addChangeHandler(new ChangeHandler() {

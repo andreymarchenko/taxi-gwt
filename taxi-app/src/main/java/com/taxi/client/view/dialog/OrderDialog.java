@@ -1,8 +1,6 @@
 package com.taxi.client.view.dialog;
 
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
@@ -44,14 +42,6 @@ public class OrderDialog extends PopupPanel {
         widget.getElement().getStyle().setBorderStyle(Style.BorderStyle.SOLID);
         widget.getElement().getStyle().setBorderColor(color);
         widget.getElement().getStyle().setBorderWidth(1, Style.Unit.PX);
-    }
-
-    public Button getCalculateRouteButton() {
-        return calculateRouteButton;
-    }
-
-    public Button getMakeOrderButton() {
-        return makeOrderButton;
     }
 
     private void createMarkUp() {
@@ -201,5 +191,13 @@ public class OrderDialog extends PopupPanel {
 
     public TextBox getTo() {
         return to;
+    }
+
+    public Button getCalculateRouteButton() {
+        return calculateRouteButton;
+    }
+
+    public Button getMakeOrderButton() {
+        return makeOrderButton;
     }
 }

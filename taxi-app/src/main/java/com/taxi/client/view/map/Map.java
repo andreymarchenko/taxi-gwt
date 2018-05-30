@@ -49,6 +49,7 @@ public class Map extends Composite {
     private Integer clickNumber = 0;
     private Boolean isRouteBuilt = false;
     private OrderDialog orderDialog;
+
     private OrderInfoDialog orderInfoDialog;
 
     private final EndPoint endPoint = GWT.create(EndPoint.class);
@@ -56,6 +57,7 @@ public class Map extends Composite {
     public Map() {
         this.panel = new VerticalPanel();
         this.markers = new ArrayList<>();
+        this.orderInfoDialog = new OrderInfoDialog();
         initWidget(panel);
         drawMap();
         drawMapAds();
@@ -113,9 +115,9 @@ public class Map extends Composite {
                 }
             }
         });
+
         orderDialog.getMakeOrderButton().addClickHandler(event -> {
             if (orderDialog.isMakeOrderButtonClickable()) {
-                orderInfoDialog = new OrderInfoDialog();
                 orderInfoDialog.show();
                 getDistance();
             }
@@ -174,7 +176,7 @@ public class Map extends Composite {
         });
     }
 
-    private void getDistance() {
+    public void getDistance() {
         LatLng[] ao = new LatLng[1];
         ao[0] = origin;
         JsArray origins = ArrayHelper.toJsArray(ao);
@@ -283,5 +285,17 @@ public class Map extends Composite {
 
     public void setOrderDialog(OrderDialog orderDialog) {
         this.orderDialog = orderDialog;
+    }
+
+    public LatLng getOrigin() {
+        return origin;
+    }
+
+    public LatLng getDestination() {
+        return destination;
+    }
+
+    public OrderInfoDialog getOrderInfoDialog() {
+        return orderInfoDialog;
     }
 }

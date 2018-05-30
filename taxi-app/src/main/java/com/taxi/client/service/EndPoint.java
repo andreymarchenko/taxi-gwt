@@ -2,6 +2,7 @@ package com.taxi.client.service;
 
 import com.taxi.shared.dto.ClientDto;
 import com.taxi.shared.dto.LoginDto;
+import com.taxi.shared.dto.OrderDto;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
@@ -20,4 +21,10 @@ public interface EndPoint extends RestService {
     @Path("/client/create")
     void createClient(ClientDto ClientDto,
                MethodCallback<ClientDto> callback);
+
+    @POST
+    @Path("/order/create")
+    void createOrder(OrderDto OrderDto,
+                     MethodCallback<OrderDto> callback);
+
 }
